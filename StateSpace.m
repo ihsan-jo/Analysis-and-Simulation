@@ -9,4 +9,4 @@ br = 2.89;       % N*s/m
 bo = 2.89;       % N*s/m
 
 % state space
-A = 
+A = [0 1; -((Kr+Kv)/J) -(br/ J)]; B = [0; (Kv*L)/J]; C = [1 0]; D = 0; sys_ss = ss(A,B,C,D); disp('The state-space representation is:'); disp(sys_ss);
