@@ -18,14 +18,10 @@ B = [ Kv*L/J, 0;
       0   , 0 ];
 
 C = [ 0      1;      % theta = 0*w + 1*theta
-      0    1/L;      % x     = (1/L)*theta + Xin
-      0  -Kv*L;      % Fin   = -Kw*L*theta + (Kr+Kw)*Xin + br*Xdotin
-      0      0 ];    % Xin   = 1*Xin
+      0  -Kv*L];    % Xin   = 1*Xin
 
 D = [      0      0;
-          0      0;
-     (Kr+Kv)    br;
-          1      0 ];
+     (Kr+Kv)    br];
 
 % create state space system
 sys = ss(A,B,C,D);
