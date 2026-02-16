@@ -18,7 +18,7 @@ B = [ Kv*L/J, 0;
       0   , 0 ];
 
 C = [ 0      1;      % theta = 0*w + 1*theta
-      0  -Kv*L];    % Xin   = 1*Xin
+      0  -Kv*L];    % Fin
 
 D = [      0      0;
      (Kr+Kv)    br];
@@ -28,25 +28,18 @@ sys = ss(A,B,C,D);
 
 % xin = Asin(omega*t)
 % xdotin = A*omega*cos(omega*t)
+% create bode manually
 
-t = 0:0.01:10; % time vector
-omega = 2*pi*1; % frequency of input (1 Hz)
-A_input = 0.01; % amplitude of input
-xin = A_input * sin(omega*t);
-xdotin = A_input * omega * cos(omega*t);
-input = [xin; xdotin];
+omega = logspace(-1, 6, 100); % frequency range from 0.1 to 1000 rad/s
 
-% do Lsim
-[y,t,x] = lsim(sys, input', t);
-
-% plot results
 figure;
-subplot(3,1,1);
-plot(t, y(:,1));
-title('Theta (rad)');
-subplot(3,1,2);
-plot(t, y(:,2));
-title('X (m)');
-subplot(3,1,3);
-plot(t, y(:,3));
-title('Fin (N)');
+bode(sys(:,1) + tf('s')*sys(:,2), omega)
+grid on;
+
+% give subplot title in sequence: theta magnitude, theta phase, Fin magnitude, Fin phase
+ax = findall(gcf, 'type', 'axes');
+ax(1).set('Title', text('String', 'Theta Magnitude'));
+ax(2).set('Title', text('String', 'Theta Phase'));
+ax(3).set('Title', text('String', 'Fin Magnitude'));
+ax(4).set('Title', text('String', 'Fin Phase'));
+

@@ -11,9 +11,10 @@ bo = 2.89;       % N*s/m
 % Transfer function for the system
 s = tf('s');
 
-K = ((Kr+br*s+Kv) + ((Kv*L)^2/(J*s^2 + bo*s + (Kv+Ko)*L^2)));
+K = ((Kr+br*s+Kv) - ((Kv*L)^2/(J*s^2 + bo*s + (Kv+Ko)*L^2)));
 % Display the transfer function
 disp('The transfer function K(s) is:');
+K
 
 % create bode plot
 bode(K);
